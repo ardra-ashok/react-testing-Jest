@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import UserForm from './UserForm';
+import UserForm from 'UserForm';
 
 test('it shows two inputs and a button',() => {
  render(<UserForm />)
@@ -10,7 +10,7 @@ test('it shows two inputs and a button',() => {
  expect(button).toBeInTheDocument();
 })
 
-test('it calls onUserAdd when the form is submitted', () => {
+test('it calls onUserAdd when the form is submitted', async () => {
 
  const mock = jest.fn();
 
@@ -23,14 +23,14 @@ test('it calls onUserAdd when the form is submitted', () => {
   name:/email/i
  })
 
- user.click(nameInput);
- user.keyboard('test');
+ await user.click(nameInput);
+ await user.keyboard('test');
 
- user.click(emailInput);
- user.keyboard('jane@jane.com');
+ await user.click(emailInput);
+ await user.keyboard('jane@jane.com');
 
  const button = screen.getByRole('button');
- user.click(button);
+ await user.click(button);
  expect(mock).toHaveBeenCalled();
  expect(mock).toHaveBeenCalledWith({name:'test',email:'jane@jane.com'})
 
